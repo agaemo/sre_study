@@ -114,6 +114,20 @@ SRE本 Chapter 6 で定義されている、**最優先で計測すべき4つの
 | Gauge | 現在のメモリ使用量 | 上下する値 |
 | Histogram | レイテンシの分布 | パーセンタイル計算 |
 
+**Cloud Runなどマネージドサービスでのメトリクス**
+
+Cloud RunやLambdaのようなサーバーレス環境では、Prometheusのような「定期的にスクレイプしに来る」Pull型のメトリクス収集は相性が悪い。インスタンスがスケールゼロになったり、IPが変わったりするためPrometheusが安定してアクセスできないからだ。
+
+こうした環境では以下のアプローチが使われる：
+
+| アプローチ | 内容 |
+|------------|------|
+| **プラットフォーム組み込みのメトリクス** | Cloud RunはリクエストレイテンシやエラーレートをGoogle Cloud Monitoringに自動で記録する。コードの変更不要 |
+| **OpenTelemetry（Push型）** | アプリ側からメトリクスをコレクターに送信（Push型）。PrometheusのPull型と異なり、スケールゼロ環境でも機能する |
+| **Prometheus Pushgateway** | バッチ処理など短命なプロセスのメトリクスをPushgateway経由で収集する |
+
+`/metrics` エンドポイントを実装してPrometheusに収集させる方式はサーバーが常駐している環境（KubernetesのPodなど）向けの設計であり、Cloud Runでも `/metrics` を実装すること自体は可能だが、Prometheusからの安定したスクレイプが困難なため、実際はCloud Monitoring + OpenTelemetryの組み合わせが主流になっている。
+
 ### トレーシング（Traces）
 - 1リクエストがどのサービスをどの順で通ったかの記録
 - マイクロサービス構成で「どこが遅いか」を特定するのに不可欠
