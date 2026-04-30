@@ -14,7 +14,7 @@ services:
     build: ./services/backend
     environment:
       - DB_URL=http://database:8082
-      - USE_CIRCUIT_BREAKER=false
+      - USE_CIRCUIT_BREAKER=${USE_CIRCUIT_BREAKER:-false}
     depends_on:
       - database
 

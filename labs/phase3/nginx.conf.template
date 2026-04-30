@@ -1,0 +1,14 @@
+upstream api_canary {
+    server api-v1:8080 weight=${V1_WEIGHT};
+    server api-v2:8080 weight=${V2_WEIGHT};
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://api_canary;
+        proxy_set_header Host $host;
+        add_header X-Upstream $upstream_addr;
+    }
+}
