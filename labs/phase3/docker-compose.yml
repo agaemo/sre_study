@@ -1,0 +1,19 @@
+services:
+  # ロードバランサ（カナリア制御）
+  nginx:
+    image: nginx:1.25-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - api-v1
+      - api-v2
+
+  # 安定版（90%のトラフィック）
+  api-v1:
+    build: ./services/api-v1
+
+  # 新バージョン・カナリア（10%のトラフィック）
+  api-v2:
+    build: ./services/api-v2

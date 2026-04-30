@@ -51,14 +51,14 @@ SREの歴史・目的・SWEとの違いを理解する。
 ### フェーズ2：障害設計（壊れることを前提に作る）
 リスク設計・カスケード障害・サーキットブレーカー・インシデント対応・ポストモーテム文化。
 
-→ [教材を読む](phase2_resilience/README.md) / ハンズオン：準備中
+→ [教材を読む](phase2_resilience/README.md) / [ハンズオンをやる](labs/phase2/README.md)
 
 ---
 
 ### フェーズ3：実践設計（SWEとSREを統合する）
 リリース戦略・ロードバランシング・Kubernetesリソース管理・SLOを意識したコード設計。
 
-→ [教材を読む](phase3_design/README.md) / ハンズオン：準備中
+→ [教材を読む](phase3_design/README.md) / [ハンズオンをやる](labs/phase3/README.md)
 
 ---
 
@@ -67,3 +67,5 @@ SREの歴史・目的・SWEとの違いを理解する。
 | フェーズ | 内容 | ツール |
 |----------|------|--------|
 | [Phase 1](labs/phase1/README.md) | Prometheus + Grafana でメトリクス計測・SLO監視 | Docker, Go |
+| [Phase 2](labs/phase2/README.md) | カスケード障害とサーキットブレーカー | Docker, Go |
+| [Phase 3](labs/phase3/README.md) | カナリアデプロイとグレースフルシャットダウン | Docker, Go, nginx |
